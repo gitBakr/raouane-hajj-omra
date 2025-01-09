@@ -16,6 +16,11 @@ const offers = [
 ];
 
 const OffersSection = () => {
+  const scrollToForm = () => {
+    const form = document.getElementById('inscription');
+    form?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="offres" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -41,8 +46,11 @@ const OffersSection = () => {
                   <span className="text-secondary font-bold">{offer.price}</span>
                   <span className="text-gray-500">{offer.duration}</span>
                 </div>
-                <button className="mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition-all">
-                  En savoir plus
+                <button 
+                  onClick={scrollToForm}
+                  className="mt-4 w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white py-2 rounded-md transition-all"
+                >
+                  Je réserve
                 </button>
               </div>
             </div>

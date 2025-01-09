@@ -4,6 +4,7 @@ import OffersSection from "@/components/OffersSection";
 import Gallery from "@/components/Gallery";
 import RegistrationForm from "@/components/RegistrationForm";
 import Footer from "@/components/Footer";
+import FloatingButtons from "@/components/FloatingButtons";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <Gallery />
       <RegistrationForm />
       <Footer />
+      <FloatingButtons />
     </div>
   );
 };
