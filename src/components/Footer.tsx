@@ -1,4 +1,5 @@
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -37,10 +38,17 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center relative">
           <p className="text-gray-300">
             © {new Date().getFullYear()} Raouane Voyages. Tous droits réservés.
           </p>
+          <Link 
+            to="/admin" 
+            className="absolute bottom-0 right-4 opacity-30 hover:opacity-100 transition-opacity"
+            title="Administration"
+          >
+            <Settings size={16} />
+          </Link>
         </div>
       </div>
     </footer>

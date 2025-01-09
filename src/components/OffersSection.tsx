@@ -1,4 +1,13 @@
 import { Info } from "lucide-react";
+import { toast } from "sonner";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const offers = [
   {
@@ -6,14 +15,39 @@ const offers = [
     description: "Vivez l'expérience spirituelle unique du Ramadan à la Mecque",
     price: "À partir de 1500€",
     duration: "15 jours",
-    image: "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?auto=format&fit=crop&w=800"
+    image: "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?auto=format&fit=crop&w=800",
+    details: {
+      depart: "Paris Charles de Gaulle",
+      hotel: "Hôtel Al Safwah Royale Orchid 5*",
+      inclus: [
+        "Vol aller-retour",
+        "Transferts aéroport",
+        "Pension complète",
+        "Guide francophone",
+        "Visa Omra",
+      ],
+      programme: "Visite des lieux saints, prières à la Mecque, visite de Médine"
+    }
   },
   {
     title: "Hajj 2024",
     description: "Accomplissez le cinquième pilier de l'Islam avec sérénité",
     price: "À partir de 6500€",
     duration: "21 jours",
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800"
+    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800",
+    details: {
+      depart: "Paris Charles de Gaulle",
+      hotel: "Hôtel Swissotel Al Maqam 5*",
+      inclus: [
+        "Vol aller-retour",
+        "Transferts aéroport",
+        "Pension complète",
+        "Guide francophone",
+        "Visa Hajj",
+        "Tenue d'Ihram"
+      ],
+      programme: "Rituel complet du Hajj, séjour à Mina, Mont Arafat, Muzdalifah"
+    }
   }
 ];
 
@@ -21,6 +55,11 @@ const OffersSection = () => {
   const scrollToForm = () => {
     const form = document.getElementById('inscription');
     form?.scrollIntoView({ behavior: 'smooth' });
+    form?.classList.remove('hidden');
+  };
+
+  const handleReservationClick = () => {
+    toast.success("Réservation fictive créée avec succès !");
   };
 
   return (
@@ -55,12 +94,45 @@ const OffersSection = () => {
                   >
                     Je réserve
                   </button>
-                  <button 
-                    className="px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 rounded-md transition-all flex items-center gap-2"
-                  >
-                    <Info className="w-4 h-4" />
-                    Voir détails
-                  </button>
+                  <Sheet>
+                    <SheetTrigger asChild>
+                      <button 
+                        className="px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 rounded-md transition-all flex items-center gap-2"
+                      >
+                        <Info className="w-4 h-4" />
+                        Voir détails
+                      </button>
+                    </SheetTrigger>
+                    <SheetContent>
+                      <SheetHeader>
+                        <SheetTitle>{offer.title}</SheetTitle>
+                        <SheetDescription>
+                          <div className="mt-4 space-y-4">
+                            <div>
+                              <h4 className="font-semibold">Départ</h4>
+                              <p>{offer.details.depart}</p>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold">Hébergement</h4>
+                              <p>{offer.details.hotel}</p>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold">Ce qui est inclus</h4>
+                              <ul className="list-disc pl-4">
+                                {offer.details.inclus.map((item, i) => (
+                                  <li key={i}>{item}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold">Programme</h4>
+                              <p>{offer.details.programme}</p>
+                            </div>
+                          </div>
+                        </SheetDescription>
+                      </SheetHeader>
+                    </SheetContent>
+                  </Sheet>
                 </div>
               </div>
             </div>
