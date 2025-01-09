@@ -1,3 +1,5 @@
+import { Info } from "lucide-react";
+
 const offers = [
   {
     title: "Omra Ramadan 2024",
@@ -46,12 +48,20 @@ const OffersSection = () => {
                   <span className="text-secondary font-bold">{offer.price}</span>
                   <span className="text-gray-500">{offer.duration}</span>
                 </div>
-                <button 
-                  onClick={scrollToForm}
-                  className="mt-4 w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-white py-2 rounded-md transition-all"
-                >
-                  Je réserve
-                </button>
+                <div className="flex gap-2 mt-4">
+                  <button 
+                    onClick={scrollToForm}
+                    className="flex-1 bg-[#9b87f5] hover:bg-[#7E69AB] text-white py-2 rounded-md transition-all"
+                  >
+                    Je réserve
+                  </button>
+                  <button 
+                    className="px-4 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2 rounded-md transition-all flex items-center gap-2"
+                  >
+                    <Info className="w-4 h-4" />
+                    Voir détails
+                  </button>
+                </div>
               </div>
             </div>
           ))}
