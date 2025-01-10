@@ -5,6 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PackageDetailsPage from './pages/packages/[id]';
 import ReservationsPage from './pages/Reservations';
+import { Contact } from '@/pages/Contact';
+import { Inscription } from '@/pages/Inscription';
+import { Layout } from '@/components/Layout';
+import { Offres } from '@/pages/Offres';
+import { Galerie } from '@/pages/Galerie';
 
 const queryClient = new QueryClient();
 
@@ -23,11 +28,17 @@ const App = () => (
         }}
       />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/packages/:id" element={<PackageDetailsPage />} />
-          <Route path="/reservations" element={<ReservationsPage />} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/packages/:id" element={<PackageDetailsPage />} />
+            <Route path="/reservations" element={<ReservationsPage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/inscription" element={<Inscription />} />
+            <Route path="/offres" element={<Offres />} />
+            <Route path="/galerie" element={<Galerie />} />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

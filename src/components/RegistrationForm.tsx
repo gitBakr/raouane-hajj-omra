@@ -12,10 +12,24 @@ export function RegistrationForm() {
   const selectedOfferId = searchParams.get('selected');
   const selectedOffer = selectedOfferId ? offers.find(offer => offer.id === selectedOfferId) : null;
 
+  useEffect(() => {
+    if (selectedOfferId) {
+      const form = document.getElementById('registration-form');
+      if (form) {
+        setTimeout(() => {
+          form.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }, 100);
+      }
+    }
+  }, [selectedOfferId]);
+
   console.log("Rendu avec ID:", selectedOfferId, "Offre:", selectedOffer);
 
   const [formData, setFormData] = useState({
-    civilite: "M.",
+    civilite: "",
     nom: "",
     prenom: "",
     nationalite: "",
@@ -54,48 +68,43 @@ export function RegistrationForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify(apiData)
       });
 
-      console.log('Réponse API:', response);
       const data = await response.json();
-      console.log('Données reçues:', data);
 
-      if (!response.ok) {
-        toast.error(data.message);
-        return;
-      }
-
-      if (data.emailSent) {
+      // Status 201 = Tout OK
+      if (response.status === 201) {
         toast.success(
           `Inscription réussie !`,
           {
             description: 
               `${formData.civilite} ${formData.nom} ${formData.prenom}, 
               votre demande pour ${selectedOffer?.title} a bien été enregistrée.
-              Un email de confirmation a été envoyé à ${formData.email}.
-              Veuillez vérifier votre boîte de réception.`,
-            duration: 6000
-          }
-        );
-      } else {
-        toast.success(
-          `Inscription réussie !`,
-          {
-            description: 
-              `${formData.civilite} ${formData.nom} ${formData.prenom}, 
-              votre demande pour ${selectedOffer?.title} a bien été enregistrée.
-              Notre équipe vous contactera prochainement au ${formData.phone}.`,
+              Un email de confirmation a été envoyé à ${formData.email}.`,
             duration: 6000
           }
         );
       }
-      
+      // Status 207 = Pèlerin OK mais email échoué
+      else if (response.status === 207) {
+        toast.success(
+          `Inscription enregistrée`,
+          {
+            description: 
+              `${formData.civilite} ${formData.nom} ${formData.prenom}, 
+              votre demande pour ${selectedOffer?.title} a bien été enregistrée.
+              Notre équipe vous contactera prochainement au ${formData.phone}.
+              ${data.emailError ? `(${data.emailError})` : ''}`,
+            duration: 6000
+          }
+        );
+      }
+
       // Réinitialiser le formulaire
       setFormData({
-        civilite: "M.",
+        civilite: "",
         nom: "",
         prenom: "",
         nationalite: "",
@@ -115,9 +124,9 @@ export function RegistrationForm() {
 
   // Fonction pour remplir les données de test
   const fillTestData = () => {
-    const random = Math.floor(Math.random() * 1000); // Nombre aléatoire pour éviter les doublons
+    const random = Math.floor(Math.random() * 1000);
     setFormData({
-      civilite: "M.",
+      civilite: "",
       nom: `Test${random}`,
       prenom: `User${random}`,
       nationalite: "Française",
@@ -129,7 +138,10 @@ export function RegistrationForm() {
   };
 
   return (
-    <section id="registration-form" className="py-8 bg-gray-50">
+    <section 
+      id="registration-form"
+      className="py-8 bg-gray-50"
+    >
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-8">
           Inscription en Ligne
@@ -164,6 +176,7 @@ export function RegistrationForm() {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               >
+                <option value="">Sélectionnez</option>
                 <option value="M.">M.</option>
                 <option value="Mme">Mme</option>
               </select>

@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Offer } from '@/data/offers';
+import { memo } from "react";
 
 interface CardPackageProps {
   offer: Offer;
 }
 
-export function CardPackage({ offer }: CardPackageProps) {
+export const CardPackage = memo(({ offer }: CardPackageProps) => {
   const handleReservation = () => {
     console.log("1. Bouton Je réserve cliqué");
     
@@ -54,4 +55,4 @@ export function CardPackage({ offer }: CardPackageProps) {
       </CardFooter>
     </Card>
   );
-} 
+}); 
