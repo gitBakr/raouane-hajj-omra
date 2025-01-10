@@ -1,18 +1,9 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSearchParams } from 'react-router-dom';
-import { offers } from '@/data/offers';
+import { Offer } from '@/data/offers';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { SearchReservations } from './SearchReservations';
-
-// Définir le type Offer
-interface Offer {
-  id: string;
-  title: string;
-  price: number;
-  duration: string;
-  description: string;
-}
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -77,17 +68,30 @@ export function RegistrationForm() {
         return;
       }
 
-      toast.success(
-        `Inscription réussie !`,
-        {
-          description: 
-            `${formData.civilite} ${formData.nom} ${formData.prenom}, 
-            votre demande pour ${selectedOffer?.title} a bien été enregistrée.
-            Un email de confirmation a été envoyé à ${formData.email}.
-            Veuillez vérifier votre boîte de réception.`,
-          duration: 6000
-        }
-      );
+      if (data.emailSent) {
+        toast.success(
+          `Inscription réussie !`,
+          {
+            description: 
+              `${formData.civilite} ${formData.nom} ${formData.prenom}, 
+              votre demande pour ${selectedOffer?.title} a bien été enregistrée.
+              Un email de confirmation a été envoyé à ${formData.email}.
+              Veuillez vérifier votre boîte de réception.`,
+            duration: 6000
+          }
+        );
+      } else {
+        toast.success(
+          `Inscription réussie !`,
+          {
+            description: 
+              `${formData.civilite} ${formData.nom} ${formData.prenom}, 
+              votre demande pour ${selectedOffer?.title} a bien été enregistrée.
+              Notre équipe vous contactera prochainement au ${formData.phone}.`,
+            duration: 6000
+          }
+        );
+      }
       
       // Réinitialiser le formulaire
       setFormData({
