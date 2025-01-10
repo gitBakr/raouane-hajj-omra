@@ -1,22 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { Offer } from '@/data/offers';
 
 interface CardPackageProps {
-  id: string;
-  title: string;
-  price: number;
-  description: string;
-  imageUrl: string;
+  offer: Offer;
 }
 
-export function CardPackage({ id, title, price, description, imageUrl }: CardPackageProps) {
+export function CardPackage({ offer }: CardPackageProps) {
   const handleReservation = () => {
     console.log("1. Bouton Je réserve cliqué");
     
     // Toast
     toast.success("Offre sélectionnée !", {
-      description: `Vous avez choisi : ${title} (${price}€)`,
+      description: `Vous avez choisi : ${offer.title} (${offer.price}€)`,
       duration: 5000
     });
     console.log("2. Toast envoyé");
@@ -35,16 +32,16 @@ export function CardPackage({ id, title, price, description, imageUrl }: CardPac
     <Card className="w-full max-w-sm hover:shadow-lg transition-shadow">
       <CardHeader>
         <img 
-          src={imageUrl} 
-          alt={title} 
+          src={offer.imageUrl} 
+          alt={offer.title} 
           className="w-full h-48 object-cover rounded-t-lg"
         />
-        <CardTitle className="mt-4">{title}</CardTitle>
+        <CardTitle className="mt-4">{offer.title}</CardTitle>
       </CardHeader>
       
       <CardContent>
-        <p className="text-gray-600 line-clamp-2">{description}</p>
-        <p className="text-xl font-bold mt-2">{price} €</p>
+        <p className="text-gray-600 line-clamp-2">{offer.description}</p>
+        <p className="text-xl font-bold mt-2">{offer.price} €</p>
       </CardContent>
 
       <CardFooter>

@@ -1,7 +1,11 @@
 import { Info } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from 'react-router-dom';
-import { offers } from '@/data/offers';
+import { offers, Offer } from '@/data/offers';
+
+interface OffersSectionProps {
+  selectedOffer?: Offer;
+}
 
 const OffersSection = () => {
   const navigate = useNavigate();

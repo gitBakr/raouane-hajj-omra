@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSearchParams } from 'react-router-dom';
-import { Offer } from '@/data/offers';
+import { offers, Offer } from '@/data/offers';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { SearchReservations } from './SearchReservations';
 
