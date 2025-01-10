@@ -49,7 +49,13 @@ export function RegistrationForm() {
         telephone: formData.phone,
         email: formData.email,
         typePelerinage: formData.typePelerinage,
-        besoinsSpeciaux: formData.message || "Aucun"
+        besoinsSpeciaux: formData.message || "Aucun",
+        offreDetails: {
+          titre: selectedOffer?.title,
+          prix: selectedOffer?.price,
+          duree: selectedOffer?.duration,
+          dateDepart: selectedOffer?.details?.depart
+        }
       };
 
       // URL modifiée pour pointer vers le serveur local
@@ -57,6 +63,7 @@ export function RegistrationForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(apiData)
       });
