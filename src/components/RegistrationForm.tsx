@@ -14,6 +14,8 @@ interface Offer {
   description: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export function RegistrationForm() {
   const [searchParams] = useSearchParams();
   const selectedOfferId = searchParams.get('selected');
@@ -51,7 +53,7 @@ export function RegistrationForm() {
       };
 
       // URL modifiée pour pointer vers le serveur local
-      const response = await fetch('http://localhost:5000/pelerin', {
+      const response = await fetch(`${API_URL}/pelerin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
