@@ -20,13 +20,6 @@ const App = () => (
             color: 'white',
             border: 'none'
           },
-          success: {
-            style: {
-              background: '#9b87f5',
-              color: 'white',
-              border: 'none'
-            }
-          }
         }}
       />
       <BrowserRouter>
