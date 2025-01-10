@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X, List } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,10 +24,12 @@ const Navbar = () => {
             <a href="#galerie" onClick={handleLinkClick} className="text-gray-700 hover:text-primary">Galerie</a>
             <a href="#inscription" onClick={handleLinkClick} className="text-gray-700 hover:text-primary">Inscription</a>
             <a href="#contact" onClick={handleLinkClick} className="text-gray-700 hover:text-primary">Contact</a>
-            <a href="/reservations" className="text-gray-700 hover:text-primary flex items-center gap-2">
-              <List className="w-4 h-4" />
-              Mes réservations
-            </a>
+            <Link 
+              to="/reservations"
+              className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Mes Réservations
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -49,10 +52,13 @@ const Navbar = () => {
               <a href="#galerie" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">Galerie</a>
               <a href="#inscription" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">Inscription</a>
               <a href="#contact" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">Contact</a>
-              <a href="/reservations" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary flex items-center gap-2">
-                <List className="w-4 h-4" />
-                Mes réservations
-              </a>
+              <Link 
+                to="/reservations"
+                onClick={handleLinkClick}
+                className="block px-3 py-2 text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Mes Réservations
+              </Link>
             </div>
           </div>
         )}
