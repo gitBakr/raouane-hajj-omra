@@ -10,6 +10,9 @@ import { Inscription } from '@/pages/Inscription';
 import { Layout } from '@/components/Layout';
 import { Offres } from '@/pages/Offres';
 import { Galerie } from '@/pages/Galerie';
+import { Admin } from '@/pages/Admin';
+import { AdminLogin } from '@/pages/AdminLogin';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,15 @@ const App = () => (
             <Route path="/inscription" element={<Inscription />} />
             <Route path="/offres" element={<Offres />} />
             <Route path="/galerie" element={<Galerie />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </Layout>
       </BrowserRouter>
