@@ -1,28 +1,14 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { ApiOffer } from '@/data/offers';
-
-export interface OfferFormData {
-  titre: string;
-  type: 'hajj' | 'omra';
-  prix: number;
-  duree: string;
-  description: string;
-  image: string;
-  details: {
-    depart: string;
-    hotel: string;
-    included: string[];
-    notIncluded: string[];
-    programme?: string;
-  }
-}
+import { ApiOffer } from '@/types/api';
 
 interface OfferFormProps {
   offer?: ApiOffer;
   onClose: () => void;
-  onSubmit: (data: OfferFormData) => void;
+  onSubmit: (data: ApiOffer) => void;
 }
+
+export type OfferFormData = Omit<ApiOffer, '_id'> & { _id?: string };
 
 export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
   const [formData, setFormData] = useState<OfferFormData>(
@@ -45,8 +31,7 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Envoi des données:', formData);
-    onSubmit(formData);
+    onSubmit(formData as ApiOffer);
   };
 
   return (
@@ -130,7 +115,7 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Départ</label>
+            <label className="block text-sm font-medium mb-2">Date de départ</label>
             <input
               type="text"
               value={formData.details.depart}
@@ -153,6 +138,19 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
                 details: { ...formData.details, hotel: e.target.value }
               })}
               className="w-full px-4 py-2 border rounded-md"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Programme</label>
+            <textarea
+              value={formData.details.programme}
+              onChange={(e) => setFormData({
+                ...formData,
+                details: { ...formData.details, programme: e.target.value }
+              })}
+              className="w-full px-4 py-2 border rounded-md h-32"
               required
             />
           </div>
