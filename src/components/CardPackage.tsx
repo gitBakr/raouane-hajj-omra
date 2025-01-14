@@ -51,7 +51,7 @@ export const CardPackage = memo(({
     <Card className="w-full max-w-sm hover:shadow-lg transition-shadow">
       <CardHeader>
         <img 
-          src={image}
+          src={image || '/placeholder.svg'}
           alt={title} 
           className="w-full h-48 object-cover rounded-t-lg"
         />
