@@ -14,4 +14,12 @@ export interface ApiOffer {
     programme: string;
   };
   dateCreation: string;
+}
+
+export interface ApiHero {
+  _id: string;
+  title: string;
+  subtitle: string;
+  backgroundImage: string;
+  buttonText: string;
 } 

@@ -13,6 +13,7 @@ import { Galerie } from '@/pages/Galerie';
 import { Admin } from '@/pages/Admin';
 import { AdminLogin } from '@/pages/AdminLogin';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { HeroProvider } from '@/contexts/HeroContext';
 
 const queryClient = new QueryClient();
 
@@ -30,28 +31,30 @@ const App = () => (
           },
         }}
       />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/packages/:id" element={<PackageDetailsPage />} />
-            <Route path="/reservations" element={<ReservationsPage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/inscription" element={<Inscription />} />
-            <Route path="/offres" element={<Offres />} />
-            <Route path="/galerie" element={<Galerie />} />
-            <Route path="/admin-login" element={<AdminLogin />} />
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute>
-                  <Admin />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+      <HeroProvider>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/packages/:id" element={<PackageDetailsPage />} />
+              <Route path="/reservations" element={<ReservationsPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/inscription" element={<Inscription />} />
+              <Route path="/offres" element={<Offres />} />
+              <Route path="/galerie" element={<Galerie />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute>
+                    <Admin />
+                  </ProtectedRoute>
+                } 
+              />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </HeroProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

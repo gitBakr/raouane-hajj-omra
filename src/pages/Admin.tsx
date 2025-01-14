@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ApiHero } from '../types/api';
 import { Settings, Users, Calendar, Package, Plus, Pencil, Trash, LogOut, Search, CircleDollarSign, Eye, Filter, X, Menu, HelpCircle } from 'lucide-react';
 import { OfferForm, OfferFormData } from '@/components/forms/OfferForm';
 import type { Offer } from '@/data/offers';
@@ -7,6 +8,9 @@ import { toast } from 'sonner';
 import Navbar from '@/components/Navbar';
 import { ApiOffer } from '@/types/api';
 import { offersApi } from '@/api/offers';
+import { HeroForm } from '@/components/forms/HeroForm';
+import { heroApi } from '@/api/hero';
+import { useHero } from '@/contexts/HeroContext';
 
 // Importer l'URL de l'API et l'email admin depuis offers.ts
 const API_URL = 'https://hajj-omra-booking-backend.onrender.com';
@@ -79,7 +83,10 @@ export function Admin() {
   const [selectedReservation, setSelectedReservation] = useState<Reservation | null>(null);
   const [showReservationDetails, setShowReservationDetails] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showHeroForm, setShowHeroForm] = useState(false);
+  const [hero, setHero] = useState<ApiHero | null>(null);
   const navigate = useNavigate();
+  const { updateHero } = useHero();
 
   useEffect(() => {
     fetch(`${API_URL}/admin/list`, {
@@ -117,6 +124,12 @@ export function Admin() {
         setApiOffers(sortedOffers);
       })
       .catch(err => console.error('Erreur chargement offres:', err));
+  }, []);
+
+  useEffect(() => {
+    heroApi.get()
+      .then(data => setHero(data))
+      .catch(err => console.error('Erreur chargement hero:', err));
   }, []);
 
   const handleCreateOffer = async (data: OfferFormData) => {
@@ -206,6 +219,19 @@ export function Admin() {
     } catch (err) {
       console.error('Erreur:', err);
       toast.error('Erreur lors de la suppression');
+    }
+  };
+
+  const handleHeroUpdate = async (data: Partial<ApiHero>) => {
+    try {
+      const updatedHero = await heroApi.update(data);
+      setHero(updatedHero);
+      updateHero(updatedHero);
+      setShowHeroForm(false);
+      toast.success('Hero mis à jour avec succès');
+    } catch (err) {
+      console.error('Erreur mise à jour hero:', err);
+      toast.error('Erreur lors de la mise à jour');
     }
   };
 
@@ -359,6 +385,14 @@ export function Admin() {
                 <span>Réservations</span>
               </span>
             </button>
+
+            <button
+              onClick={() => setShowHeroForm(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg"
+            >
+              <Pencil className="w-4 h-4" />
+              Modifier le Hero
+            </button>
           </div>
         </nav>
 
@@ -444,6 +478,13 @@ export function Admin() {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <h2 className="text-xl font-semibold text-gray-900">Gestion des Offres</h2>
                 <div className="flex gap-2">
+                  <button 
+                    onClick={() => setShowHeroForm(true)}
+                    className="inline-flex items-center justify-center px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+                  >
+                    <Pencil className="w-4 h-4 mr-2" />
+                    Modifier Hero
+                  </button>
                   <button 
                     onClick={() => setShowHelp(true)}
                     className="inline-flex items-center justify-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
@@ -608,8 +649,17 @@ export function Admin() {
           </div>
         </div>
       )}
+
+      {/* Modal Hero Form */}
+      {showHeroForm && (
+        <HeroForm
+          hero={hero || undefined}
+          onClose={() => setShowHeroForm(false)}
+          onSubmit={handleHeroUpdate}
+        />
+      )}
     </>
   );
 }
 
-export default Admin; 
+export default Admin;

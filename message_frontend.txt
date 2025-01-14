@@ -1,0 +1,79 @@
+Bonjour développeur front-end,
+
+Voici les informations nécessaires pour l'intégration avec le backend :
+
+1. Upload d'images :
+- Endpoint : POST https://hajj-omra-booking-backend.onrender.com/upload/image
+- Format : multipart/form-data
+- Paramètres :
+  * email: "raouanedev@gmail.com" (string)
+  * image: fichier image (max 20MB)
+- Réponse :
+{
+  "success": true,
+  "imageUrl": "https://hajj-omra-booking-backend.onrender.com/uploads/hero/nom-du-fichier.jpg"
+}
+
+2. Routes Hero :
+- POST /hero : Crée un nouveau hero
+  * Paramètres : imageUrl, titre, sous-titre
+  * Réponse : Hero créé
+
+- PUT /hero/:id : Met à jour un hero
+  * Paramètres : imageUrl, titre, sous-titre
+  * Réponse : Hero mis à jour
+
+- GET /hero : Récupère les informations du hero
+  * Réponse : { imageUrl, titre, sous-titre }
+
+- DELETE /hero/:id : Supprime un hero
+  * Réponse : Confirmation de suppression
+
+3. Exemple d'implémentation avec fetch :
+
+// Upload d'image
+async function uploadImage(file) {
+  const formData = new FormData();
+  formData.append('email', 'raouanedev@gmail.com');
+  formData.append('image', file);
+
+  try {
+    const response = await fetch('https://hajj-omra-booking-backend.onrender.com/upload/image', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      return data.imageUrl;
+    } else {
+      throw new Error('Upload failed');
+    }
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+}
+
+// Création d'un hero
+async function createHero(imageUrl, title, subtitle) {
+  try {
+    const response = await fetch('https://hajj-omra-booking-backend.onrender.com/hero', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ imageUrl, title, subtitle })
+    });
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating hero:', error);
+    throw error;
+  }
+}
+
+N'hésitez pas à me contacter si vous avez besoin de plus d'informations.
+
+Cordialement,
