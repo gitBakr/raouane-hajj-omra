@@ -4,7 +4,8 @@ export interface Offer {
   description: string;
   price: number;
   duration: string;
-  imageUrl: string;
+  image: string;
+  type: 'hajj' | 'omra';
   details: {
     depart: string;
     hotel: string;
@@ -14,5 +15,32 @@ export interface Offer {
   };
 }
 
-// Suppression des offres statiques
-export const offers: Offer[] = []; 
+export const offers: Offer[] = [
+  {
+    id: 'hajj-2025',
+    title: 'HAJJ 2025',
+    description: 'Accomplissez le cinquième pilier de l\'Islam avec sérénité',
+    price: 6990,
+    duration: '21 jours',
+    image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800',
+    type: 'hajj',
+    details: {
+      depart: 'Paris Charles de Gaulle',
+      hotel: 'Hôtel Swissotel Al Maqam 5*',
+      included: [
+        'Vol aller-retour',
+        'Transferts en bus climatisé VIP',
+        'Hébergement en pension complète',
+        'Accompagnement spirituel',
+        'Guide francophone expérimenté',
+        'Visa Hajj inclus'
+      ],
+      notIncluded: [
+        'Assurance voyage',
+        'Dépenses personnelles'
+      ],
+      programme: 'Rituel complet du Hajj, séjour à Mina, Mont Arafat, Muzdalifah'
+    }
+  },
+  // ... autres offres
+]; 

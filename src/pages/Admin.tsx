@@ -29,7 +29,8 @@ const transformApiOfferToOffer = (apiOffer: ApiOffer): Offer => ({
   description: apiOffer.description,
   price: apiOffer.prix,
   duration: apiOffer.duree,
-  imageUrl: apiOffer.image,
+  image: apiOffer.image,
+  type: apiOffer.type,
   details: {
     depart: apiOffer.details.depart,
     hotel: apiOffer.details.hotel,
