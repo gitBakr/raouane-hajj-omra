@@ -1,33 +1,17 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { useSearchParams } from 'react-router-dom';
-import { offers, Offer } from '@/data/offers';
+import type { Offer } from '@/data/offers';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { SearchReservations } from './SearchReservations';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-export function RegistrationForm() {
-  const [searchParams] = useSearchParams();
-  const selectedOfferId = searchParams.get('selected');
-  const selectedOffer = selectedOfferId ? offers.find(offer => offer.id === selectedOfferId) : null;
+interface RegistrationFormProps {
+  selectedOffer: Offer | null;
+  onOfferSelect: (offer: Offer | null) => void;
+}
 
-  useEffect(() => {
-    if (selectedOfferId) {
-      const form = document.getElementById('registration-form');
-      if (form) {
-        setTimeout(() => {
-          form.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }, 100);
-      }
-    }
-  }, [selectedOfferId]);
-
-  console.log("Rendu avec ID:", selectedOfferId, "Offre:", selectedOffer);
-
+export function RegistrationForm({ selectedOffer, onOfferSelect }: RegistrationFormProps) {
   const [formData, setFormData] = useState({
     civilite: "",
     nom: "",
@@ -35,11 +19,21 @@ export function RegistrationForm() {
     nationalite: "",
     email: "",
     phone: "",
-    typePelerinage: selectedOffer?.id.includes('hajj') ? 'hajj' : 'omra',
+    typePelerinage: selectedOffer?.type || 'omra',
     message: ""
   });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  // Mettre à jour le type de pèlerinage quand l'offre change
+  useEffect(() => {
+    if (selectedOffer) {
+      setFormData(prev => ({
+        ...prev,
+        typePelerinage: selectedOffer.type
+      }));
+    }
+  }, [selectedOffer]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,7 +104,7 @@ export function RegistrationForm() {
         nationalite: "",
         email: "",
         phone: "",
-        typePelerinage: selectedOffer?.id.includes('hajj') ? 'hajj' : 'omra',
+        typePelerinage: selectedOffer?.type || 'omra',
         message: ""
       });
 
@@ -132,7 +126,7 @@ export function RegistrationForm() {
       nationalite: "Française",
       email: `test${random}@example.com`,
       phone: "0612345678",
-      typePelerinage: selectedOffer?.id.includes('hajj') ? 'hajj' : 'omra',
+      typePelerinage: selectedOffer?.type || 'omra',
       message: "Test d'envoi automatique"
     });
   };

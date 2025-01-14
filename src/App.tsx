@@ -8,7 +8,7 @@ import ReservationsPage from './pages/Reservations';
 import { Contact } from '@/pages/Contact';
 import { Inscription } from '@/pages/Inscription';
 import { Layout } from '@/components/Layout';
-import { Offres } from '@/pages/Offres';
+import Offres from "./pages/Offres";
 import { Galerie } from '@/pages/Galerie';
 import { Admin } from '@/pages/Admin';
 import { AdminLogin } from '@/pages/AdminLogin';
