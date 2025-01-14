@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Settings, Users, Calendar, Package, Plus, Pencil, Trash, LogOut, Search, CircleDollarSign, Eye, Filter, X, Menu, HelpCircle } from 'lucide-react';
-import { OfferForm } from '@/components/forms/OfferForm';
+import { OfferForm, OfferFormData } from '@/components/forms/OfferForm';
 import type { Offer } from '@/data/offers';
-import type { OfferFormData } from '@/components/forms/OfferForm';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import Navbar from '@/components/Navbar';
@@ -226,7 +225,7 @@ export function Admin() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {reservations.map((reservation) => (
           <div 
-            key={reservation._id}
+            key={`reservation-${reservation._id}`}
             className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow"
           >
             <div className="flex justify-between items-start mb-4">
@@ -371,7 +370,7 @@ export function Admin() {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                 {stats.map((stat, index) => (
                   <div 
-                    key={`stat-${stat.title}`}
+                    key={`dashboard-stat-${stat.title}-${index}`}
                     className="bg-white rounded-xl shadow-sm p-4 lg:p-6 border border-gray-100"
                   >
                     <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${stat.color}`}>
@@ -388,7 +387,10 @@ export function Admin() {
                 <h3 className="text-lg font-semibold mb-4">Offres récentes</h3>
                 <div className="grid gap-4">
                   {apiOffers.slice(0, 3).map((offer) => (
-                    <div key={offer._id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div 
+                      key={`dashboard-recent-offer-${offer._id}`}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex items-center gap-3">
                         <img 
                           src={offer.image} 
@@ -413,7 +415,10 @@ export function Admin() {
                 <h3 className="text-lg font-semibold mb-4">Réservations récentes</h3>
                 <div className="grid gap-4">
                   {reservations.slice(0, 5).map((reservation) => (
-                    <div key={reservation._id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div 
+                      key={`dashboard-recent-reservation-${reservation._id}`}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div>
                         <h4 className="font-medium text-gray-900">
                           {reservation.nom} {reservation.prenom}
@@ -470,7 +475,7 @@ export function Admin() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {apiOffers.map((offer) => (
                   <div 
-                    key={offer._id}
+                    key={`offer-card-${offer._id}`}
                     className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
                   >
                     <div className="relative h-48">

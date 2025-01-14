@@ -22,7 +22,7 @@ export const offers: Offer[] = [
     description: 'Accomplissez le cinquième pilier de l\'Islam avec sérénité',
     price: 6990,
     duration: '21 jours',
-    image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800',
+    image: '/images/votre-image.jpg',
     type: 'hajj',
     details: {
       depart: 'Paris Charles de Gaulle',

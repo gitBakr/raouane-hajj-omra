@@ -253,7 +253,6 @@ export function RegistrationForm({ selectedOffer, onOfferSelect }: RegistrationF
           </form>
         </div>
       </div>
-      <SearchReservations />
     </section>
   );
 }

@@ -1,4 +1,11 @@
 const Hero = () => {
+  const scrollToOffers = () => {
+    const offersSection = document.getElementById('offres');
+    if (offersSection) {
+      offersSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div id="accueil" className="relative h-screen">
       <div 
@@ -13,12 +20,12 @@ const Hero = () => {
         <div className="text-white px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Voyagez vers les Lieux Saints</h1>
           <p className="text-xl md:text-2xl mb-8">Découvrez nos offres Omra et Hajj</p>
-          <a 
-            href="#offres"
+          <button 
+            onClick={scrollToOffers}
             className="bg-secondary text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-opacity-90 transition-all"
           >
             Voir nos offres
-          </a>
+          </button>
         </div>
       </div>
     </div>
