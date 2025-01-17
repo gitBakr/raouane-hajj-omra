@@ -63,7 +63,7 @@ const Hero = () => {
             onClick={scrollToOffers}
             className="bg-secondary text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-opacity-90 transition-all"
           >
-            Découvrir nos offres
+            {heroData.buttonText}
           </button>
         </div>
       </div>

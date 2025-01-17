@@ -22,28 +22,28 @@ export interface OfferFormData {
 }
 
 interface OfferFormProps {
-  offer?: ApiOffer;
+  onSubmit: (data: OfferFormData) => void;
   onClose: () => void;
-  onSubmit: (data: OfferFormData) => void; // Utilisation du type OfferFormData
+  initialData?: ApiOffer;
 }
 
-export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
+export function OfferForm({ onSubmit, onClose, initialData }: OfferFormProps) {
   const [imageType, setImageType] = useState<'url' | 'file'>('url');
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>(offer?.image || '');
+  const [imagePreview, setImagePreview] = useState<string>(initialData?.image || '');
   
   // Initialisation sécurisée des états
   const [formData, setFormData] = useState({
-    titre: offer?.titre || '',
-    type: offer?.type || 'hajj',
-    prix: offer?.prix || 0,
-    description: offer?.description || '',
-    duree: offer?.duree || '',
-    depart: offer?.details?.depart || '',
-    hotel: offer?.details?.hotel || '',
-    programme: offer?.details?.programme || '',
-    included: offer?.details?.included?.join('\n') || '',
-    notIncluded: offer?.details?.notIncluded?.join('\n') || ''
+    titre: initialData?.titre || '',
+    type: initialData?.type || 'hajj',
+    prix: initialData?.prix || 0,
+    description: initialData?.description || '',
+    duree: initialData?.duree || '',
+    depart: initialData?.details?.depart || '',
+    hotel: initialData?.details?.hotel || '',
+    programme: initialData?.details?.programme || '',
+    included: initialData?.details?.included?.join('\n') || '',
+    notIncluded: initialData?.details?.notIncluded?.join('\n') || ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -138,7 +138,7 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
     e.preventDefault();
     
     const createData = (imageUrl: string) => ({
-      _id: offer?._id,
+      _id: initialData?._id,
       titre: formData.titre,
       type: formData.type as 'hajj' | 'omra',
       prix: Number(formData.prix),
@@ -176,12 +176,15 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
     }
   };
 
+  // Mettre à jour le titre du modal en fonction du mode
+  const modalTitle = initialData ? 'Modifier l\'offre' : 'Nouvelle offre';
+
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-gray-800">
-            {offer ? 'Modifier l\'offre' : 'Nouvelle offre'}
+            {modalTitle}
           </h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
             <X className="w-6 h-6" />
@@ -281,7 +284,7 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
               <input
                 type="url"
                 name="image"
-                defaultValue={offer?.image}
+                defaultValue={initialData?.image}
                 placeholder="URL de l'image"
                 className="w-full px-4 py-2 border rounded-md"
               />
@@ -369,7 +372,7 @@ export function OfferForm({ offer, onClose, onSubmit }: OfferFormProps) {
             type="submit"
             className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90"
           >
-            {offer ? 'Enregistrer les modifications' : 'Créer l\'offre'}
+            {initialData ? 'Enregistrer les modifications' : 'Créer l\'offre'}
           </button>
         </form>
       </div>

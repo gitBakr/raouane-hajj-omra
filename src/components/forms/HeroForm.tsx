@@ -18,7 +18,7 @@ export function HeroForm({ hero, onClose, onSubmit }: HeroFormProps) {
   const [formData, setFormData] = useState({
     title: hero?.title || '',
     subtitle: hero?.subtitle || '',
-    buttonText: hero?.buttonText || '',
+    buttonText: hero?.buttonText || 'Découvrir nos offres',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -71,9 +71,21 @@ export function HeroForm({ hero, onClose, onSubmit }: HeroFormProps) {
       }
 
       onSubmit({
-        ...formData,
+        _id: hero?._id,
+        title: formData.title,
+        subtitle: formData.subtitle,
+        buttonText: formData.buttonText,
         backgroundImage: finalImageUrl
       });
+
+      console.log('Données envoyées:', {
+        _id: hero?._id,
+        title: formData.title,
+        subtitle: formData.subtitle,
+        buttonText: formData.buttonText,
+        backgroundImage: finalImageUrl
+      });
+
     } catch (error) {
       console.error('Erreur:', error);
       toast.error('Erreur lors du traitement', {
@@ -163,7 +175,8 @@ export function HeroForm({ hero, onClose, onSubmit }: HeroFormProps) {
               <input
                 type="url"
                 name="backgroundImage"
-                defaultValue={hero?.backgroundImage}
+                value={imagePreview}
+                onChange={(e) => setImagePreview(e.target.value)}
                 placeholder="URL de l'image"
                 className="w-full px-4 py-2 border rounded-md"
               />

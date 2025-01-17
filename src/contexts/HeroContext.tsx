@@ -13,11 +13,24 @@ export function HeroProvider({ children }: { children: React.ReactNode }) {
   const [hero, setHero] = useState<ApiHero | null>(null);
 
   useEffect(() => {
-    heroApi.get().then(setHero);
+    heroApi.get()
+      .then(data => {
+        console.log('Initial hero data:', data);
+        setHero(data);
+      })
+      .catch(err => console.error('Error loading hero:', err));
   }, []);
 
   const updateHero = (newHero: ApiHero) => {
-    setHero(newHero);
+    console.log('Updating hero with:', newHero);
+    setHero(prevHero => {
+      if (!prevHero) return newHero;
+      return {
+        ...prevHero,
+        ...newHero,
+        buttonText: newHero.buttonText || prevHero.buttonText
+      };
+    });
   };
 
   return (

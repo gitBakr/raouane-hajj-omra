@@ -1,5 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-
 const images = [
   "https://images.unsplash.com/photo-1466442929976-97f336a657be?auto=format&fit=crop&w=600",
   "https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?auto=format&fit=crop&w=600",
@@ -22,23 +20,23 @@ const Gallery = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-12">
           Galerie Photos
         </h2>
-        <ScrollArea className="h-[600px] rounded-md border p-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="overflow-x-auto whitespace-nowrap py-4">
+          <div className="inline-flex gap-4">
             {images.map((image, index) => (
-              <div 
+              <div
                 key={index}
-                className="relative overflow-hidden rounded-lg shadow-lg fade-in"
+                className="relative inline-block w-64 h-64 rounded-lg shadow-lg fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <img
                   src={image}
                   alt={`Gallery image ${index + 1}`}
-                  className="w-full h-64 object-cover transform hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover rounded-lg transform hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </section>
   );

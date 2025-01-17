@@ -10,6 +10,17 @@ export const heroApi = {
   },
 
   update: async (data: Partial<ApiHero>): Promise<ApiHero> => {
+    console.log('Données envoyées à l\'API:', {
+      email: 'raouanedev@gmail.com',
+      hero: {
+        _id: data._id,
+        title: data.title,
+        subtitle: data.subtitle,
+        buttonText: data.buttonText,
+        backgroundImage: data.backgroundImage
+      }
+    });
+
     const response = await fetch(`${API_URL}/hero`, {
       method: 'PUT',
       headers: {
@@ -17,10 +28,24 @@ export const heroApi = {
       },
       body: JSON.stringify({
         email: 'raouanedev@gmail.com',
-        hero: data
+        hero: {
+          _id: data._id,
+          title: data.title,
+          subtitle: data.subtitle,
+          buttonText: data.buttonText,
+          backgroundImage: data.backgroundImage
+        }
       }),
     });
-    if (!response.ok) throw new Error('Erreur lors de la mise à jour du hero');
-    return response.json();
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Erreur API:', error);
+      throw new Error('Erreur lors de la mise à jour du hero');
+    }
+
+    const result = await response.json();
+    console.log('Réponse de l\'API:', result);
+    return result;
   }
 }; 

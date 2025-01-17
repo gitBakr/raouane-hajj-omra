@@ -1,20 +1,31 @@
 import { useState } from "react";
-import { Menu, X, List } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLinkClick = (sectionId?: string) => {
+  const handleLinkClick = (path: string, sectionId?: string) => {
     setIsOpen(false);
+    
     if (sectionId) {
+      navigate('/');
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       }, 100);
+    } else {
+      navigate(path);
     }
+  };
+
+  // Menu mobile
+  const handleMobileClick = (path: string) => {
+    setIsOpen(false);
+    navigate(path);
   };
 
   return (
@@ -27,48 +38,42 @@ const Navbar = () => {
           
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
-            <Link 
-              to="/" 
-              onClick={() => handleLinkClick('accueil')} 
+            <button 
+              onClick={() => handleLinkClick('/', 'accueil')}
               className="text-gray-700 hover:text-primary"
             >
               Accueil
-            </Link>
-            <Link 
-              to="/offres" 
-              onClick={() => handleLinkClick()} 
+            </button>
+            <button 
+              onClick={() => handleLinkClick('/offres')}
               className="text-gray-700 hover:text-primary"
             >
               Nos Offres
-            </Link>
-            <Link 
-              to="/galerie" 
-              onClick={() => handleLinkClick()} 
+            </button>
+            <button 
+              onClick={() => handleLinkClick('/galerie')}
               className="text-gray-700 hover:text-primary"
             >
               Galerie
-            </Link>
-            <Link 
-              to="/inscription" 
-              onClick={() => handleLinkClick()} 
+            </button>
+            <button 
+              onClick={() => handleLinkClick('/inscription')}
               className="text-gray-700 hover:text-primary"
             >
               Inscription
-            </Link>
-            <Link 
-              to="/contact" 
-              onClick={() => handleLinkClick()} 
+            </button>
+            <button 
+              onClick={() => handleLinkClick('/contact')}
               className="text-gray-700 hover:text-primary"
             >
               Contact
-            </Link>
-            <Link 
-              to="/reservations" 
-              onClick={() => handleLinkClick()} 
+            </button>
+            <button 
+              onClick={() => handleLinkClick('/reservations')}
               className="text-gray-700 hover:text-primary"
             >
               Mes Réservations
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -86,32 +91,48 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <Link to="/" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">
+              <button 
+                onClick={() => handleMobileClick('/')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
+              >
                 Accueil
-              </Link>
-              <Link 
-                to="/offres" 
-                onClick={() => handleLinkClick()} 
-                className="block px-3 py-2 text-gray-700 hover:text-primary"
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/offres')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
               >
                 Nos Offres
-              </Link>
-              <Link 
-                to="/galerie" 
-                onClick={() => handleLinkClick()} 
-                className="block px-3 py-2 text-gray-700 hover:text-primary"
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/galerie')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
               >
                 Galerie
-              </Link>
-              <Link to="/inscription" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/inscription')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
+              >
                 Inscription
-              </Link>
-              <Link to="/contact" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/contact')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
+              >
                 Contact
-              </Link>
-              <Link to="/reservations" onClick={handleLinkClick} className="block px-3 py-2 text-gray-700 hover:text-primary">
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/reservations')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
+              >
                 Mes Réservations
-              </Link>
+              </button>
+              <button 
+                onClick={() => handleMobileClick('/admin')}
+                className="block w-full text-left px-3 py-2 text-gray-700 hover:text-primary"
+              >
+                Administration
+              </button>
             </div>
           </div>
         )}
